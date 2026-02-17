@@ -17,6 +17,8 @@ class _SpaceShooterGameState extends State<SpaceShooterGame> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Space Shooter',
       home: Scaffold(
         body: GameWidget<SpaceShooter>(
           game: SpaceShooter(),

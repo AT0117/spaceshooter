@@ -6,7 +6,5 @@ class GameConfig {
   static const double turretHeight = 30.0;
   static const double bulletSpeed = 600.0;
   static const double enemySpeed = 120.0;
-  static const Color planetColor = Colors.blue;
   static const Color bulletColor = Colors.yellowAccent;
-  static const Color enemyColor = Colors.redAccent;
 }

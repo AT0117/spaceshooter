@@ -1,26 +1,21 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/widgets.dart';
 import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/components/particle_generator.dart';
 import 'package:spaceshooter/components/planet.dart';
 import 'package:spaceshooter/constants.dart';
 import 'package:spaceshooter/spaceshooter.dart';
 
-class Enemy extends CircleComponent
+class Enemy extends SpriteComponent
     with HasGameReference<SpaceShooter>, CollisionCallbacks {
   Enemy({required Vector2 position})
-    : super(
-        position: position,
-        radius: 10,
-        anchor: Anchor.center,
-        paint: Paint()..color = GameConfig.enemyColor,
-      );
+    : super(position: position, size: Vector2.all(50), anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {
-    super.onLoad();
-    add(CircleHitbox());
+    sprite = await game.loadSprite('spaceship.png');
+    add(RectangleHitbox());
+    lookAt(game.size / 2);
   }
 
   @override
