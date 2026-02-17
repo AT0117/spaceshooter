@@ -5,8 +5,10 @@ import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/components/particle_generator.dart';
 import 'package:spaceshooter/components/planet.dart';
 import 'package:spaceshooter/constants.dart';
+import 'package:spaceshooter/spaceshooter.dart';
 
-class Enemy extends CircleComponent with HasGameReference, CollisionCallbacks {
+class Enemy extends CircleComponent
+    with HasGameReference<SpaceShooter>, CollisionCallbacks {
   Enemy({required Vector2 position})
     : super(
         position: position,
@@ -38,14 +40,14 @@ class Enemy extends CircleComponent with HasGameReference, CollisionCallbacks {
 
     if (other is Bullet) {
       game.add(ParticleGenerator.createExplosion(position));
-
       removeFromParent();
       other.removeFromParent();
+      game.incrementScore();
     }
 
     if (other is Planet) {
-      game.overlays.add('GAME OVER');
-      removeFromParent();
+      game.overlays.add('GameOverMenu');
+      game.pauseEngine();
     }
   }
 }

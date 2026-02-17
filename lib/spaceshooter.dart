@@ -5,12 +5,15 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/components/enemy.dart';
 import 'package:spaceshooter/components/planet.dart';
 import 'package:spaceshooter/components/turret.dart';
 
 class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
   late Turret turret;
+  late TextComponent scoreText;
+  int score = 0;
 
   @override
   Color backgroundColor() {
@@ -42,6 +45,22 @@ class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
         selfPositioning: true,
       ),
     );
+    scoreText = TextComponent(text: 'Score: 0', position: Vector2(20, 40));
+    add(scoreText);
+  }
+
+  void incrementScore() {
+    score += 1;
+    scoreText.text = 'Score: $score';
+  }
+
+  void restart() {
+    score = 0;
+    scoreText.text = 'Score: 0';
+    children.whereType<Enemy>().forEach((e) => e.removeFromParent());
+    children.whereType<Bullet>().forEach((b) => b.removeFromParent());
+    overlays.remove('GameOverMenu');
+    resumeEngine();
   }
 
   @override
