@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:spaceshooter/constants.dart';
 
 class Bullet extends RectangleComponent
@@ -12,15 +13,21 @@ class Bullet extends RectangleComponent
   Bullet({required Vector2 position, required this.angleAtFire})
     : super(
         position: position,
-        size: Vector2(4, 10),
+        size: Vector2(2, 10),
         anchor: Anchor.center,
         angle: angleAtFire,
-        paint: Paint()..color = GameConfig.bulletColor,
       );
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
     add(RectangleHitbox());
+
+    paint.shader = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: GameConfig.bulletColorList,
+    ).createShader(size.toRect());
+    paint.blendMode = BlendMode.screen;
   }
 
   @override

@@ -1,29 +1,45 @@
 import 'dart:async';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/constants.dart';
 
 class Turret extends PositionComponent with HasGameReference {
-  late final RectangleComponent barrel;
+  late final SpriteComponent rocketSprite;
 
   Turret() : super(anchor: Anchor.center);
 
   @override
-  FutureOr<void> onLoad() {
-    barrel = RectangleComponent(
-      size: Vector2(GameConfig.turretHeight, GameConfig.turretHeight),
-      position: Vector2(0, -GameConfig.planetRadius),
-      paint: Paint()..color = Colors.white,
+  FutureOr<void> onLoad() async {
+    final sprite = await game.loadSprite('rocket.png');
+    rocketSprite = SpriteComponent(
+      sprite: sprite,
+      size: Vector2(50, 50),
+      position: Vector2(0, -GameConfig.planetRadius - 10),
+      anchor: Anchor.center,
     );
-    add(barrel);
+    add(rocketSprite);
+
+    rocketSprite.add(
+      MoveEffect.by(
+        Vector2(0.5, 0.5),
+        EffectController(duration: 0.05, reverseDuration: 0.05, infinite: true),
+      ),
+    );
   }
 
   void shoot() {
     final bullet = Bullet(
-      position: barrel.absolutePosition,
+      position: rocketSprite.absolutePosition,
       angleAtFire: angle,
     );
     game.add(bullet);
+    rocketSprite.add(
+      MoveEffect.by(
+        Vector2(0, 10),
+        EffectController(duration: 0.1, reverseDuration: 0.1),
+      ),
+    );
   }
 }
