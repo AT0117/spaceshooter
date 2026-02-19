@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flutter/material.dart';
 import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/constants.dart';
 
@@ -15,7 +14,7 @@ class Turret extends PositionComponent with HasGameReference {
     final sprite = await game.loadSprite('rocket.png');
     rocketSprite = SpriteComponent(
       sprite: sprite,
-      size: Vector2(50, 50),
+      size: Vector2(25, 75),
       position: Vector2(0, -GameConfig.planetRadius - 10),
       anchor: Anchor.center,
     );

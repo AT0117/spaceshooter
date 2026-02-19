@@ -1,5 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:spaceshooter/constants.dart';
 import 'package:spaceshooter/spaceshooter.dart';
 
 void main() {
@@ -27,25 +29,43 @@ class _SpaceShooterGameState extends State<SpaceShooterGame> {
               return Center(
                 child: Container(
                   padding: EdgeInsets.all(20),
-                  color: Colors.black,
+                  color: Color.fromARGB(230, 0, 0, 0),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'GAME OVER',
-                        style: TextStyle(
+                        style: GoogleFonts.stalinistOne(
                           color: Colors.red,
-                          fontSize: 32,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          letterSpacing: 5,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
+                      SizedBox(height: 30),
+                      TextButton(
                         onPressed: () {
                           game.restart();
                         },
-                        child: Text('RESTART'),
+                        child: Text(
+                          'RESTART',
+                          style: GoogleFonts.stalinistOne(
+                            color: Colors.cyan,
+                            letterSpacing: 5,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
+                      SizedBox(height: 30),
+                      Text(
+                        'ENEMY SPEED',
+                        style: GoogleFonts.stalinistOne(
+                          color: Colors.white,
+                          letterSpacing: 3,
+                        ),
+                      ),
+                      SliderWidget(),
                     ],
                   ),
                 ),
@@ -53,6 +73,37 @@ class _SpaceShooterGameState extends State<SpaceShooterGame> {
             },
           },
         ),
+      ),
+    );
+  }
+}
+
+class SliderWidget extends StatefulWidget {
+  const SliderWidget({super.key});
+
+  @override
+  State<SliderWidget> createState() => _SliderWidgetState();
+}
+
+class _SliderWidgetState extends State<SliderWidget> {
+  double currentEnemySpeed = GameConfig.enemySpeed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: Slider(
+        value: currentEnemySpeed,
+        min: 120,
+        max: 300,
+        divisions: 10,
+        activeColor: Colors.white,
+        onChanged: (value) {
+          setState(() {
+            currentEnemySpeed = value;
+            GameConfig.enemySpeed = value;
+          });
+        },
       ),
     );
   }

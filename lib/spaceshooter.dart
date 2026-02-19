@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:spaceshooter/components/background.dart';
 import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/components/enemy.dart';
@@ -11,8 +13,14 @@ import 'package:spaceshooter/components/turret.dart';
 
 class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
   late Turret turret;
-  late TextComponent scoreText;
   int score = 0;
+  late TextComponent scoreText = TextComponent(
+    position: Vector2(20, 40),
+    textRenderer: TextPaint(
+      style: GoogleFonts.stalinistOne(color: Colors.white),
+    ),
+    text: '',
+  );
 
   @override
   FutureOr<void> onLoad() async {
@@ -21,7 +29,7 @@ class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
     add(Planet()..position = center);
     turret = Turret()..position = center;
     add(turret);
-
+    add(scoreText);
     add(
       SpawnComponent(
         factory: (index) {
@@ -40,8 +48,6 @@ class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
         selfPositioning: true,
       ),
     );
-    scoreText = TextComponent(text: 'Score: 0', position: Vector2(20, 40));
-    add(scoreText);
   }
 
   void incrementScore() {

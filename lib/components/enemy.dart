@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:spaceshooter/components/bullet.dart';
-import 'package:spaceshooter/components/particle_generator.dart';
+import 'package:spaceshooter/components/explosion.dart';
 import 'package:spaceshooter/components/planet.dart';
 import 'package:spaceshooter/constants.dart';
 import 'package:spaceshooter/spaceshooter.dart';
@@ -34,7 +34,7 @@ class Enemy extends SpriteComponent
     super.onCollisionStart(intersectionPoints, other);
 
     if (other is Bullet) {
-      game.add(ParticleGenerator.createExplosion(position));
+      game.add(Explosion(position: position.clone()));
       removeFromParent();
       other.removeFromParent();
       game.incrementScore();
