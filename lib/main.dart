@@ -44,6 +44,14 @@ class _SpaceShooterGameState extends State<SpaceShooterGame> {
                         ),
                       ),
                       SizedBox(height: 30),
+                      Text(
+                        'Score: ${game.score.toString()}',
+                        style: GoogleFonts.stalinistOne(
+                          letterSpacing: 3,
+                          color: Colors.greenAccent,
+                        ),
+                      ),
+                      SizedBox(height: 30),
                       TextButton(
                         onPressed: () {
                           game.restart();
@@ -52,6 +60,61 @@ class _SpaceShooterGameState extends State<SpaceShooterGame> {
                           'RESTART',
                           style: GoogleFonts.stalinistOne(
                             color: Colors.cyan,
+                            letterSpacing: 5,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        'ENEMY SPEED',
+                        style: GoogleFonts.stalinistOne(
+                          color: Colors.white,
+                          letterSpacing: 3,
+                        ),
+                      ),
+                      SliderWidget(),
+                    ],
+                  ),
+                ),
+              );
+            },
+            'GameStartMenu': (context, game) {
+              return Center(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  color: Color.fromARGB(230, 0, 0, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'SPACE SHOOTER',
+                        style: GoogleFonts.stalinistOne(
+                          color: Colors.cyanAccent,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 5,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        'BY AT117',
+                        style: GoogleFonts.stalinistOne(
+                          letterSpacing: 3,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      TextButton(
+                        onPressed: () {
+                          game.resumeEngine();
+                          game.overlays.remove('GameStartMenu');
+                        },
+                        child: Text(
+                          'PLAY',
+                          style: GoogleFonts.stalinistOne(
+                            color: Colors.greenAccent,
                             letterSpacing: 5,
                             fontSize: 16,
                           ),

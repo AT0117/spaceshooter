@@ -25,6 +25,8 @@ class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
   @override
   FutureOr<void> onLoad() async {
     await add(SpaceBackground());
+    pauseEngine();
+    overlays.add('GameStartMenu');
     final center = size / 2;
     add(Planet()..position = center);
     turret = Turret()..position = center;
