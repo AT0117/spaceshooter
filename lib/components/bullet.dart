@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ class Bullet extends RectangleComponent
   @override
   FutureOr<void> onLoad() async {
     add(RectangleHitbox());
-
     paint.shader = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,

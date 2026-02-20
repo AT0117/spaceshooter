@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/components/explosion.dart';
 import 'package:spaceshooter/components/planet.dart';
@@ -34,6 +35,7 @@ class Enemy extends SpriteComponent
     super.onCollisionStart(intersectionPoints, other);
 
     if (other is Bullet) {
+      FlameAudio.play('explosion.mp3');
       game.add(Explosion(position: position.clone()));
       removeFromParent();
       other.removeFromParent();
@@ -41,6 +43,7 @@ class Enemy extends SpriteComponent
     }
 
     if (other is Planet) {
+      FlameAudio.play('gameover.mp3');
       game.overlays.add('GameOverMenu');
       game.pauseEngine();
     }

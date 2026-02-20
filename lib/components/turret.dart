@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:spaceshooter/components/bullet.dart';
 import 'package:spaceshooter/constants.dart';
 
@@ -29,6 +30,7 @@ class Turret extends PositionComponent with HasGameReference {
   }
 
   void shoot() {
+    FlameAudio.play('bullet.mp3');
     final bullet = Bullet(
       position: rocketSprite.absolutePosition,
       angleAtFire: angle,

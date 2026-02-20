@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:spaceshooter/components/background.dart';
@@ -25,6 +26,11 @@ class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
   @override
   FutureOr<void> onLoad() async {
     await add(SpaceBackground());
+    await FlameAudio.audioCache.loadAll([
+      'bullet.mp3',
+      'explosion.mp3',
+      'gameover.mp3',
+    ]);
     pauseEngine();
     overlays.add('GameStartMenu');
     final center = size / 2;
