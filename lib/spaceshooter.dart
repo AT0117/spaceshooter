@@ -14,6 +14,9 @@ import 'package:spaceshooter/components/turret.dart';
 
 class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
   late Turret turret;
+  late AudioPool bulletPool;
+  late AudioPool explosionPool;
+  late AudioPool gameoverPool;
   int score = 0;
   late TextComponent scoreText = TextComponent(
     position: Vector2(20, 40),
@@ -25,18 +28,21 @@ class SpaceShooter extends FlameGame with HasCollisionDetection, PanDetector {
 
   @override
   FutureOr<void> onLoad() async {
-    await add(SpaceBackground());
-    await FlameAudio.audioCache.loadAll([
-      'bullet.mp3',
-      'explosion.mp3',
-      'gameover.mp3',
-    ]);
     pauseEngine();
+    await add(SpaceBackground());
     overlays.add('GameStartMenu');
     final center = size / 2;
     add(Planet()..position = center);
     turret = Turret()..position = center;
     add(turret);
+    bulletPool = await FlameAudio.createPool('bullet.mp3', maxPlayers: 7);
+    explosionPool = await FlameAudio.createPool('explosion.mp3', maxPlayers: 5);
+    gameoverPool = await FlameAudio.createPool('gameover.mp3', maxPlayers: 1);
+    await FlameAudio.audioCache.loadAll([
+      'bullet.mp3',
+      'explosion.mp3',
+      'gameover.mp3',
+    ]);
     add(scoreText);
     add(
       SpawnComponent(
